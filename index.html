@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>墨爾本家庭之旅 - 最終行程表</title>
+    <title>墨爾本家庭之旅 - 導遊隨身版</title>
     <!-- 引入 FontAwesome 圖標庫 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 引入 Google Fonts -->
@@ -16,12 +16,13 @@
             --highlight-blue: #0077b6;  
             --highlight-red: #d9534f;   
             --time-gold: #b58900;       
-            --bg-gradient-start: #f8fbff; /* 漸層起點：極淡藍 */
-            --bg-gradient-end: #eef2f3;   /* 漸層終點：質感灰 */
+            --bg-gradient-start: #f8fbff;
+            --bg-gradient-end: #eef2f3;
             --card-bg: #ffffff;
-            --drive-bg: #f1f3f5;        /* 駕駛區塊顏色優化 */
+            --drive-bg: #f8f9fa;
             --text-main: #2c3e50;
             --text-sub: #666;
+            --link-color: #0077b6; /* 地圖連結顏色 */
         }
 
         /* 基礎設定 */
@@ -31,7 +32,6 @@
             font-family: 'Roboto', 'Noto Sans TC', sans-serif;
             margin: 0;
             padding: 0;
-            /* 背景優化：使用固定式漸層，質感更好 */
             background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             background-attachment: fixed; 
             color: var(--text-main);
@@ -39,67 +39,80 @@
             padding-bottom: 80px;
         }
 
+        /* 連結樣式優化 (針對 Google Maps) */
+        a.map-link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px dotted var(--link-color);
+            transition: all 0.2s;
+        }
+        a.map-link:active {
+            background-color: rgba(0, 119, 182, 0.1);
+        }
+        .map-icon {
+            margin-left: 4px;
+            font-size: 14px;
+            color: var(--link-color);
+        }
+
         /* --- 置頂群組容器 --- */
         .sticky-header-group {
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* 增加陰影層次感 */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+            background: white; /* 確保背景不透明 */
         }
 
-        /* App Header 樣式微調 - 已改為置中 */
+        /* App Header */
         .app-header {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* 深藍質感漸層 */
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); 
             color: white;
-            padding: 20px 15px 15px;
-            text-align: center; /* 文字置中 */
+            padding: 15px 15px 10px;
+            text-align: center;
         }
-        .app-header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .app-header p { margin: 5px 0 0; font-size: 13px; opacity: 0.9; font-weight: 300; }
+        .app-header h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: 1.2px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .app-header p { margin: 5px 0 0; font-size: 12px; opacity: 0.9; font-weight: 300; }
 
-        /* 導航列樣式微調 - 已改為置中 */
+        /* 導航列 */
         .nav-scroller {
             display: flex;
             overflow-x: auto;
             white-space: nowrap;
-            padding: 12px 10px;
-            background: rgba(255, 255, 255, 0.98); /* 輕微透明感 */
-            backdrop-filter: blur(5px); /* 毛玻璃特效 */
+            padding: 10px 10px;
+            background: rgba(255, 255, 255, 0.98); 
             border-bottom: 1px solid rgba(0,0,0,0.05);
             -webkit-overflow-scrolling: touch;
-            justify-content: center; /* 讓導航按鈕置中 */
         }
-        
-        /* 若螢幕較小內容溢出時，讓 justify-content: center 不會切掉左邊內容 (安全機制) */
-        @media (max-width: 600px) {
-            .nav-scroller {
-                justify-content: flex-start; /* 手機版如果按鈕太多，靠左比較好滑動 */
-            }
-        }
-        
-        /* 隱藏滾動條 (美觀) */
-        .nav-scroller::-webkit-scrollbar {
-            display: none; 
-        }
+        .nav-scroller::-webkit-scrollbar { display: none; }
 
         .nav-item {
             flex: 0 0 auto;
-            margin: 0 4px; /* 調整間距使置中更緊湊 */
-            padding: 8px 16px;
-            border-radius: 25px; /* 更圓潤 */
-            font-size: 14px;
+            margin: 0 4px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
             text-decoration: none;
             color: var(--text-sub);
             background: #f0f2f5;
-            border: 1px solid transparent; /* 預留邊框位置 */
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column; /* 讓日期在下方 */
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
+        .nav-item span.nav-date {
+            font-size: 10px;
+            opacity: 0.8;
+            font-weight: normal;
         }
         .nav-item.active {
             background-color: var(--primary-blue);
             color: white;
-            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.4); /* 激活時發光感 */
-            transform: translateY(-1px); /* 微微浮起 */
+            box-shadow: 0 2px 8px rgba(0, 86, 179, 0.4);
         }
 
         /* 內容容器 */
@@ -113,11 +126,12 @@
         .section-header {
             display: flex;
             align-items: center;
-            margin-top: 35px; /* 增加間距 */
+            margin-top: 35px;
             margin-bottom: 15px;
             padding-bottom: 8px;
             border-bottom: 3px solid var(--primary-blue);
-            scroll-margin-top: 160px; /* 重要：修正錨點定位，避免被置頂區塊擋住 */
+            /* 關鍵修正：加大上方的緩衝空間，避免被 sticky header 擋住 */
+            scroll-margin-top: 180px; 
         }
         .section-header h2 {
             font-size: 19px;
@@ -129,132 +143,138 @@
         .section-icon {
             background: var(--primary-blue);
             color: white;
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 14px;
         }
 
         /* 卡片樣式 */
         .card {
             background: var(--card-bg);
-            border-radius: 16px; /* 更大的圓角 */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* 更柔和的陰影 */
-            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            padding: 18px;
             margin-bottom: 20px;
-            border: 1px solid rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
-        /* 行程項目列表 */
-        .itinerary-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        /* 航班資訊 */
+        .flight-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed #eee;
         }
+        .flight-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .flight-time-big { font-size: 20px; font-weight: 800; color: var(--primary-blue); }
+        .flight-date-small { font-size: 12px; color: #888; }
+        .flight-group-title { font-size: 13px; color: #555; background: #eee; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; font-weight: bold;}
+
+        /* 行程項目列表 */
+        .itinerary-list { list-style: none; padding: 0; margin: 0; }
         .itinerary-item {
             position: relative;
-            padding-left: 24px;
-            margin-bottom: 18px;
-            border-left: 2px solid #e9ecef; /* 更淡的線條 */
+            padding-left: 20px;
+            margin-bottom: 16px;
+            border-left: 2px solid #e9ecef;
             padding-bottom: 2px;
         }
         .itinerary-item:last-child { margin-bottom: 0; }
         
-        /* 圓點裝飾 */
         .itinerary-item::before {
             content: '';
             position: absolute;
             left: -6px;
-            top: 7px;
+            top: 8px;
             width: 10px;
             height: 10px;
             background: #fff;
-            border: 3px solid var(--primary-blue); /* 空心圓點設計 */
+            border: 3px solid var(--primary-blue);
             border-radius: 50%;
-            box-shadow: 0 0 0 2px #fff; /* 白邊區隔 */
         }
 
-        /* 重點文字樣式 */
-        .highlight-blue { color: var(--highlight-blue); font-weight: 700; }
+        /* 標籤與重點 */
         .highlight-red { color: var(--highlight-red); font-weight: 700; }
         .time-badge {
             display: inline-block;
             background-color: var(--time-gold);
             color: white;
             font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-left: 6px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 5px;
             vertical-align: middle;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
-        /* 駕駛資訊區塊 */
+        /* 駕駛與導遊資訊區塊 */
         .drive-info {
             background-color: var(--drive-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0 25px 0;
-            font-size: 14px;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            font-size: 13px;
             color: #495057;
-            border: none; /* 移除邊框改用左側色條 */
-            border-left: 5px solid #7f8c8d;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.03);
+            border-left: 4px solid #6c757d;
         }
-        .drive-header {
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-size: 15px;
-        }
-        .drive-detail {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .drive-header { font-weight: 700; display: flex; align-items: center; margin-bottom: 6px; color: #2c3e50; font-size: 14px; }
+        .drive-detail { display: flex; flex-direction: column; gap: 5px; }
         .alert-row {
             color: var(--highlight-red);
             font-weight: 500;
             display: flex;
-            align-items: center;
-            font-size: 13px;
+            align-items: flex-start; /* 讓圖示對齊頂部 */
+            font-size: 12px;
             margin-top: 5px;
-            background: rgba(255,255,255,0.6);
-            padding: 6px 10px;
-            border-radius: 6px;
+            background: rgba(255,255,255,0.7);
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+        .guide-tip {
+            font-size: 12px;
+            color: #27ae60;
+            background: #e8f8f5;
+            padding: 5px 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            border-left: 3px solid #27ae60;
+            display: flex;
+            align-items: flex-start;
         }
 
         /* 住宿資訊 */
         .hotel-info {
             margin-top: 15px;
-            padding-top: 12px;
+            padding-top: 10px;
             border-top: 1px dashed #e0e0e0;
             font-size: 13px;
             color: #555;
             display: flex;
             align-items: center;
             background: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
         }
-        .hotel-info i { margin-right: 8px; color: var(--primary-blue); font-size: 15px; }
+        .hotel-info i { margin-right: 8px; color: var(--primary-blue); }
 
-        /* 回到頂部按鈕 */
+        /* Tips Card */
+        .card.tips-card { background-color: #fff9db; border: none; border-left: 5px solid #f1c40f; }
+
+        /* Back to top */
         .back-to-top {
             position: fixed;
             bottom: 25px;
             right: 25px;
             background: var(--primary-blue);
             color: white;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -262,63 +282,69 @@
             box-shadow: 0 4px 15px rgba(0,86,179,0.4);
             text-decoration: none;
             z-index: 999;
-            transition: transform 0.2s;
-        }
-        .back-to-top:active { transform: scale(0.95); }
-
-        /* 特殊卡片：Tips */
-        .card.tips-card {
-            background-color: #fff9db; 
-            border: none;
-            border-left: 5px solid #f1c40f;
         }
     </style>
 </head>
 <body>
 
-    <!-- 置頂群組容器 (包含 Header 與 導航) -->
+    <!-- 置頂群組容器 -->
     <div class="sticky-header-group">
-        <!-- App Header -->
         <div class="app-header">
             <h1>🇦🇺 墨爾本家庭之旅</h1>
-            <p>南澳海岸、大洋路與淘金鎮冒險</p>
+            <p>12/12 - 12/22 專屬導遊行程</p>
         </div>
 
-        <!-- Navigation (順序已更新：航班 -> 提醒 -> D1...D6) -->
         <div class="nav-scroller">
-            <a href="#flight" class="nav-item">航班</a>
-            <a href="#tips" class="nav-item">提醒</a>
-            <a href="#day1" class="nav-item">D1</a>
-            <a href="#day2" class="nav-item">D2</a>
-            <a href="#day3" class="nav-item">D3</a>
-            <a href="#day4" class="nav-item">D4</a>
-            <a href="#day5" class="nav-item">D5</a>
-            <a href="#day6" class="nav-item">D6</a>
+            <a href="#flight" class="nav-item">航班<span class="nav-date">Info</span></a>
+            <a href="#tips" class="nav-item">須知<span class="nav-date">Tips</span></a>
+            <a href="#day1" class="nav-item">D1<span class="nav-date">12/12</span></a>
+            <a href="#day2" class="nav-item">D2<span class="nav-date">12/13</span></a>
+            <a href="#day3" class="nav-item">D3<span class="nav-date">12/14</span></a>
+            <a href="#day4" class="nav-item">D4<span class="nav-date">12/15</span></a>
+            <a href="#day5" class="nav-item">D5<span class="nav-date">12/16</span></a>
+            <a href="#day6" class="nav-item">D6<span class="nav-date">12/17</span></a>
         </div>
     </div>
 
     <div class="container">
 
-        <!-- 區塊一：航班資訊 -->
+        <!-- 航班資訊 -->
         <div id="flight" class="section-header">
             <div class="section-icon"><i class="fa-solid fa-plane"></i></div>
             <h2>航班資訊</h2>
         </div>
+        
         <div class="card">
-            <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:15px;">
-                <div>
-                    <div style="font-size:12px; color:#666; margin-bottom: 2px;">去程 12/12 (五)</div>
-                    <div style="font-size:26px; font-weight:800; color:var(--primary-blue); line-height: 1.2;">12:05</div>
-                    <div style="font-weight: 500;">抵達 MEL</div>
-                </div>
-                <div style="text-align:right; display:flex; flex-direction:column; justify-content:center;">
-                    <span class="highlight-red" style="font-size:13px; background: #fff0f0; padding: 4px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px;"><i class="fa-solid fa-car"></i> 取車任務</span>
-                    <span style="font-size:12px; color:#888;">預留 1.5hr 入關取車</span>
-                </div>
+            <div class="flight-group-title">✈️ 去程：台北 TPE → 墨爾本 MEL</div>
+            <div class="flight-row">
+                <div><div class="flight-date-small">12/11 (四) 第一批</div><div><span class="flight-time-big">23:45</span> TPE</div></div>
+                <div style="text-align:center; font-size:12px; color:#aaa;"><i class="fa-solid fa-arrow-right"></i><br>直飛</div>
+                <div style="text-align:right;"><div class="flight-date-small">12/12 (五)</div><div>MEL <span class="flight-time-big">12:05</span></div></div>
             </div>
+            <div class="flight-row" style="border-top:1px solid #eee; padding-top:10px;">
+                <div><div class="flight-date-small">12/13 (六) 第二批</div><div><span class="flight-time-big">23:45</span> TPE</div></div>
+                <div style="text-align:center; font-size:12px; color:#aaa;"><i class="fa-solid fa-arrow-right"></i><br>直飛</div>
+                <div style="text-align:right;"><div class="flight-date-small">12/14 (日)</div><div>MEL <span class="flight-time-big">12:05</span></div></div>
+            </div>
+            <div class="alert-row"><i class="fa-solid fa-user-group" style="margin-right:5px;"></i> 第二批將於 Day 3 機場會合</div>
         </div>
 
-        <!-- 區塊二：注意事項 (移至此處) -->
+        <div class="card">
+            <div class="flight-group-title">✈️ 回程：墨爾本 MEL → 台北 TPE</div>
+            <div class="flight-row">
+                <div><div class="flight-date-small">12/21 (日) 轉機組</div><div><span class="flight-time-big">18:30</span> MEL</div></div>
+                <div style="text-align:center; font-size:12px; color:#aaa;"><i class="fa-solid fa-arrow-right"></i><br>雪梨轉</div>
+                <div style="text-align:right;"><div class="flight-date-small">12/22 (一)</div><div>TPE <span class="flight-time-big">04:20</span></div></div>
+            </div>
+            <div class="flight-row" style="border-top:1px solid #eee; padding-top:10px;">
+                <div><div class="flight-date-small">12/22 (一) 午夜機</div><div><span class="flight-time-big">00:35</span> MEL</div></div>
+                <div style="text-align:center; font-size:12px; color:#aaa;"><i class="fa-solid fa-arrow-right"></i><br>直飛</div>
+                <div style="text-align:right;"><div class="flight-date-small">12/22 (一)</div><div>TPE <span class="flight-time-big">06:45</span></div></div>
+            </div>
+            <div class="alert-row" style="background-color:#ffecec; color:#c0392b;"><i class="fa-solid fa-bell" style="margin-right:5px;"></i> 注意：12/21 (週日) 晚上就要去機場報到！</div>
+        </div>
+
+        <!-- 注意事項 (已修正標題擋住問題) -->
         <div id="tips" class="section-header">
             <div class="section-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
             <h2>行前與重要提醒</h2>
@@ -327,68 +353,66 @@
         <div class="card tips-card">
             <ul class="itinerary-list">
                 <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                    <span class="highlight-red">退稅福利 (TRS)：</span><br>
+                    單一店家消費滿 $300 AUD (可累積) 記得要發票，離境時可退稅約 10%。
+                </li>
+                <li class="itinerary-item" style="border-left:none; padding-left:0;">
                     <span class="highlight-red">天氣穿著：</span><br>
-                    12月墨爾本雖是夏天，但早晚溫差極大，且大洋路海風強勁。請務必準備<span class="highlight-blue">防風外套</span>與<span class="highlight-blue">洋蔥式穿搭</span>。
+                    12月是夏天但溫差極大，大洋路風大，請備<span class="highlight-blue">防風外套</span>與<span class="highlight-blue">洋蔥式穿搭</span>。
+                </li>
+                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                    <span class="highlight-red">生活與安全：</span><br>
+                    1. 澳洲自來水(Tap Water)可生飲。<br>
+                    2. 緊急救難電話：<a href="tel:000" class="map-link">000</a> (警察/救護車/消防)。<br>
+                    3. 紫外線極強，請務必擦防曬、戴墨鏡。
                 </li>
                 <li class="itinerary-item" style="border-left:none; padding-left:0;">
                     <span class="highlight-red">交通規則：</span><br>
-                    1. 墨爾本市區有「免費電車區 (Free Tram Zone)」，出此區域<span class="highlight-red">上下車務必刷卡</span>，查票很嚴格。<br>
-                    2. 右駕開車請隨時提醒駕駛「靠左行駛」。
-                </li>
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
-                    <span class="highlight-red">超市補給：</span><br>
-                    看到 Coles 或 Woolworths 就盡量補齊水與零食，偏鄉超商價格昂貴。
+                    1. 墨爾本市區「免費電車區」外上下車必刷卡。<br>
+                    2. 駕駛請隨時默念「靠左行駛」。
                 </li>
             </ul>
         </div>
 
-
-        <!-- 區塊三：每日行程 (Day 1 - Day 6) -->
-        
         <!-- Day 1 -->
         <div id="day1" class="section-header">
             <div class="section-icon">1</div>
             <h2>12/12 (五) 抵達與海岸線</h2>
         </div>
         
-        <!-- 駕駛資訊 -->
         <div class="drive-info">
             <div class="drive-header"><i class="fa-solid fa-steering-wheel" style="margin-right:8px;"></i> 駕駛情報</div>
             <div class="drive-detail">
-                <span>機場 <i class="fa-solid fa-arrow-right"></i> Southbank (約25分) <i class="fa-solid fa-arrow-right"></i> Mornington (約50分)</span>
-                <div class="alert-row"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i> 建議加油點：Braeside - Ampol (往南途中)</div>
+                <span><a href="https://www.google.com/maps/search/?api=1&query=Melbourne+Airport" target="_blank" class="map-link">機場</a> <i class="fa-solid fa-arrow-right"></i> <a href="https://www.google.com/maps/search/?api=1&query=Southbank+Melbourne" target="_blank" class="map-link">Southbank</a> (25分) <i class="fa-solid fa-arrow-right"></i> Mornington (50分)</span>
+                <div class="alert-row"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i> 加油點：<a href="https://www.google.com/maps/search/?api=1&query=Ampol+Braeside" target="_blank" class="map-link">Ampol Braeside</a></div>
             </div>
         </div>
 
         <div class="card">
             <ul class="itinerary-list">
                 <li class="itinerary-item">
-                    <strong>航班抵達 MEL</strong> <span class="time-badge">12:05</span><br>
-                    辦理租車手續，導航設定前往市區。
+                    <strong>12:05 抵達</strong>，辦理租車，導航 <a href="https://www.google.com/maps/search/?api=1&query=Southbank+Melbourne" target="_blank" class="map-link">Southbank<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
                 </li>
                 <li class="itinerary-item">
-                    下午：前往 <span class="highlight-blue">Southbank 住所</span><br>
-                    放行李、短暫休息。
+                    下午：住所放行李、吃點東西、上廁所。
                 </li>
                 <li class="itinerary-item">
-                    景點：<span class="highlight-blue">Point Ormond Lookout</span> <span class="time-badge">30m</span><br>
-                    接著前往 <span class="highlight-blue">Brighton Bathing Boxes</span> (彩虹小屋) <span class="time-badge">40m</span>。
+                    景點：<a href="https://www.google.com/maps/search/?api=1&query=Point+Ormond+Lookout" target="_blank" class="map-link">Point Ormond Lookout<i class="fa-solid fa-map-location-dot map-icon"></i></a> <span class="time-badge">30m</span><br>
+                    接著前往 <a href="https://www.google.com/maps/search/?api=1&query=Brighton+Bathing+Boxes" target="_blank" class="map-link">Brighton Bathing Boxes (彩虹小屋)<i class="fa-solid fa-map-location-dot map-icon"></i></a> <span class="time-badge">40m</span>。
                 </li>
                 <li class="itinerary-item">
-                    傍晚：<span class="highlight-blue">Oliver's Hill Lookout</span><br>
-                    觀賞海灣景色。
+                    傍晚：<a href="https://www.google.com/maps/search/?api=1&query=Oliver's+Hill+Lookout" target="_blank" class="map-link">Oliver's Hill Lookout<i class="fa-solid fa-map-location-dot map-icon"></i></a> 觀景。
                 </li>
                 <li class="itinerary-item">
-                    晚餐：Mornington 附近用餐<br>
-                    推薦：Le Feu (越南河粉) 或 D.O.C Pizza。<br>
-                    <span class="highlight-red"><i class="fa-solid fa-cart-shopping"></i> 重要任務：Coles 超市採購兩天份早餐。</span>
+                    晚餐：Mornington 附近<br>
+                    推薦：<a href="https://www.google.com/maps/search/?api=1&query=Le+Feu+Mornington" target="_blank" class="map-link">Le Feu (越式)<i class="fa-solid fa-map-location-dot map-icon"></i></a> 或 <a href="https://www.google.com/maps/search/?api=1&query=D.O.C+Pizza+and+Deli+Mornington" target="_blank" class="map-link">D.O.C Pizza<i class="fa-solid fa-map-location-dot map-icon"></i></a>。<br>
+                    <span class="highlight-red"><i class="fa-solid fa-cart-shopping"></i> 任務：<a href="https://www.google.com/maps/search/?api=1&query=Coles+Mornington" target="_blank" class="map-link">Coles Mornington</a> 買兩天早餐。</span>
                 </li>
             </ul>
             <div class="hotel-info">
-                <i class="fa-solid fa-bed"></i> 住宿：23 Fleur Ave (Mornington)
+                <i class="fa-solid fa-bed"></i> 住宿：<a href="https://www.google.com/maps/search/?api=1&query=23+Fleur+Ave+Mornington" target="_blank" class="map-link">23 Fleur Ave<i class="fa-solid fa-map-location-dot map-icon"></i></a>
             </div>
         </div>
-
 
         <!-- Day 2 -->
         <div id="day2" class="section-header">
@@ -400,41 +424,36 @@
             <div class="drive-header"><i class="fa-solid fa-steering-wheel" style="margin-right:8px;"></i> 駕駛情報</div>
             <div class="drive-detail">
                 <span>半島區域短程移動</span>
-                <div class="alert-row"><i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;"></i> Diamond Bay 停車場較小，請小心會車。</div>
+                <div class="alert-row"><i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;"></i> Diamond Bay 停車場小，請小心會車。</div>
             </div>
         </div>
 
         <div class="card">
             <ul class="itinerary-list">
                 <li class="itinerary-item">
-                    上午活動 (二選一) <span class="time-badge">2-3hr</span><br>
-                    1. <span class="highlight-blue">The Funky Farm</span> <span class="highlight-red">(需預訂)</span><br>
-                    2. Bathing Boxes Mornington 漫步 + <span class="highlight-blue">Arthurs Seat Eagle 纜車</span>。
+                    上午 (二選一) <span class="time-badge">2-3hr</span><br>
+                    1. <a href="https://www.google.com/maps/search/?api=1&query=The+Funky+Farm" target="_blank" class="map-link">The Funky Farm<i class="fa-solid fa-map-location-dot map-icon"></i></a> <span class="highlight-red">(需預訂)</span><br>
+                    2. <a href="https://www.google.com/maps/search/?api=1&query=Bathing+Boxes+Mornington" target="_blank" class="map-link">海灘小屋漫步</a> + <a href="https://www.google.com/maps/search/?api=1&query=Arthurs+Seat+Eagle" target="_blank" class="map-link">Arthurs Seat Eagle 纜車<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
+                    <div class="guide-tip"><i class="fa-solid fa-person-swimming"></i> 導遊提醒：今日請隨身攜帶泳衣、毛巾。</div>
                 </li>
                 <li class="itinerary-item">
-                    午餐：DD's Kebab & Burgers 或 Subway (簡單解決)。
+                    午餐：<a href="https://www.google.com/maps/search/?api=1&query=Sorrento+Victoria" target="_blank" class="map-link">Sorrento 小鎮<i class="fa-solid fa-map-location-dot map-icon"></i></a> (Kebab / Subway)。
                 </li>
                 <li class="itinerary-item">
-                    下午景點三連發：<br>
-                    1. <span class="highlight-blue">Quarantine Station</span><br>
-                    2. <span class="highlight-blue">London Bridge Lookout</span> (半島版)<br>
-                    3. <span class="highlight-blue">Diamond Bay</span> (鑽石灣)
+                    下午景點：<br>
+                    1. <a href="https://www.google.com/maps/search/?api=1&query=Point+Nepean+National+Park" target="_blank" class="map-link">Point Nepean Park<i class="fa-solid fa-map-location-dot map-icon"></i></a><br>
+                    2. <a href="https://www.google.com/maps/search/?api=1&query=London+Bridge+Lookout+Portsea" target="_blank" class="map-link">London Bridge (半島版)<i class="fa-solid fa-map-location-dot map-icon"></i></a><br>
+                    3. <a href="https://www.google.com/maps/search/?api=1&query=Diamond+Bay+Sorrento" target="_blank" class="map-link">Diamond Bay (鑽石灣)<i class="fa-solid fa-map-location-dot map-icon"></i></a>
                 </li>
                 <li class="itinerary-item">
-                    晚餐：Sorrento 附近解決。
-                </li>
-                <li class="itinerary-item">
-                    夜間行程 <span class="time-badge">晚間</span><br>
-                    先去 <span class="highlight-blue">The Dragon’s head</span> 觀景。<br>
-                    接著前往 <span class="highlight-blue">Peninsula Hot Springs 溫泉</span>。<br>
-                    <span class="highlight-red">★ 需預訂：建議預約 6pm 後入場場次。</span>
+                    夜間：<a href="https://www.google.com/maps/search/?api=1&query=The+Dragon's+Head+Rye" target="_blank" class="map-link">The Dragon’s head<i class="fa-solid fa-map-location-dot map-icon"></i></a> 觀景。<br>
+                    隨後前往 <a href="https://www.google.com/maps/search/?api=1&query=Peninsula+Hot+Springs" target="_blank" class="map-link">Peninsula Hot Springs 溫泉<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
                 </li>
             </ul>
             <div class="hotel-info">
-                <i class="fa-solid fa-bed"></i> 住宿：23 Fleur Ave (續住)
+                <i class="fa-solid fa-bed"></i> 住宿：<a href="https://www.google.com/maps/search/?api=1&query=23+Fleur+Ave+Mornington" target="_blank" class="map-link">23 Fleur Ave<i class="fa-solid fa-map-location-dot map-icon"></i></a>
             </div>
         </div>
-
 
         <!-- Day 3 -->
         <div id="day3" class="section-header">
@@ -447,37 +466,33 @@
             <div class="drive-detail">
                 <span>早：Mornington → 機場 (約1.5hr)</span>
                 <span>午：機場 → Geelong → Apollo Bay (約3hr)</span>
-                <div class="alert-row"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i> 中途加油/廁所：Winchelsea - Ampol (過 Geelong 後)</div>
+                <div class="alert-row"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i> 中途休息：<a href="https://www.google.com/maps/search/?api=1&query=Ampol+Foodary+Winchelsea" target="_blank" class="map-link">Ampol Winchelsea</a></div>
             </div>
         </div>
 
         <div class="card">
             <ul class="itinerary-list">
                 <li class="itinerary-item">
-                    上午：<br>
-                    1. Bun Bun Bakery 越南小點<br>
-                    2. Tone coffee<br>
-                    3. <span class="highlight-blue">South Melbourne Market</span> <span class="highlight-red">(在此買零食/點心帶上車)</span>
+                    上午：<a href="https://www.google.com/maps/search/?api=1&query=Tone+Coffee+South+Melbourne" target="_blank" class="map-link">Tone Coffee<i class="fa-solid fa-map-location-dot map-icon"></i></a>
+                    <div class="guide-tip"><i class="fa-solid fa-mug-hot"></i> 導遊推薦：既然來了，試試墨爾本特產 "Magic Coffee"。</div>
+                    接著逛 <a href="https://www.google.com/maps/search/?api=1&query=South+Melbourne+Market" target="_blank" class="map-link">South Melbourne Market<i class="fa-solid fa-map-location-dot map-icon"></i></a> 買點心。
                 </li>
                 <li class="itinerary-item">
-                    中午：<span class="highlight-blue">前往機場</span> <span class="time-badge">重要</span><br>
-                    確認租車事項 + 與另一組家人會合。
+                    中午：<span class="highlight-blue">前往機場接機</span>。
                 </li>
                 <li class="itinerary-item">
-                    下午：<span class="highlight-blue">Geelong 市區</span><br>
-                    Eastern Beach 散步。<br>
-                    <span class="highlight-red"><i class="fa-solid fa-cart-shopping"></i> 最終補給：務必在 Geelong 超市買好「兩天份早餐」，大洋路後段無大型超市。</span>
+                    下午：<a href="https://www.google.com/maps/search/?api=1&query=Eastern+Beach+Geelong" target="_blank" class="map-link">Geelong / Eastern Beach<i class="fa-solid fa-map-location-dot map-icon"></i></a>。<br>
+                    <span class="highlight-red"><i class="fa-solid fa-cart-shopping"></i> 最終補給：</span>在 Geelong 超市買好「兩天份早餐」，大洋路後段無大超市。
                 </li>
                 <li class="itinerary-item">
-                    晚餐：Apollo Bay (Pit Stop Bros 漢堡)。<br>
-                    飯後可至 <span class="highlight-blue">Apollo Bay Beach</span> 散步。
+                    晚餐：<a href="https://www.google.com/maps/search/?api=1&query=Pit+Stop+Bros+Apollo+Bay" target="_blank" class="map-link">Pit Stop Bros 漢堡<i class="fa-solid fa-map-location-dot map-icon"></i></a>。<br>
+                    飯後散步：<a href="https://www.google.com/maps/search/?api=1&query=Apollo+Bay+Beach" target="_blank" class="map-link">Apollo Bay Beach<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
                 </li>
             </ul>
             <div class="hotel-info">
-                <i class="fa-solid fa-bed"></i> 住宿：33 Noel st (Apollo Bay區域)
+                <i class="fa-solid fa-bed"></i> 住宿：<a href="https://www.google.com/maps/search/?api=1&query=33+Noel+st+Apollo+Bay" target="_blank" class="map-link">33 Noel st<i class="fa-solid fa-map-location-dot map-icon"></i></a>
             </div>
         </div>
-
 
         <!-- Day 4 -->
         <div id="day4" class="section-header">
@@ -488,40 +503,34 @@
         <div class="drive-info">
             <div class="drive-header"><i class="fa-solid fa-steering-wheel" style="margin-right:8px;"></i> 駕駛情報</div>
             <div class="drive-detail">
-                <span>Apollo Bay → 12門徒 → Port Campbell (景點間移動)</span>
-                <div class="alert-row"><i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;"></i> 12門徒遊客多，注意行人與停車。</div>
+                <span>景點間短程移動，注意遊客與對向來車。</span>
+                <div class="alert-row"><i class="fa-solid fa-circle-exclamation" style="margin-right:6px;"></i> 小心野生動物 (袋鼠/無尾熊) 穿越馬路。</div>
             </div>
         </div>
 
         <div class="card">
             <ul class="itinerary-list">
                 <li class="itinerary-item">
-                    上午：<span class="highlight-red">購買外帶午餐</span> (或用自備早餐)。
+                    上午：<span class="highlight-red">購買外帶午餐</span> (或用自備)。
                 </li>
                 <li class="itinerary-item">
-                    活動：<span class="highlight-blue">Otway Fly Treetop Adventures</span> <span class="time-badge">2hr</span><br>
-                    溜索 / 樹頂漫步 <span class="highlight-red">(需預訂)</span>。
+                    活動：<a href="https://www.google.com/maps/search/?api=1&query=Otway+Fly+Treetop+Adventures" target="_blank" class="map-link">Otway Fly Treetop Adventures<i class="fa-solid fa-map-location-dot map-icon"></i></a> <span class="highlight-red">(需預訂)</span>。
                 </li>
                 <li class="itinerary-item">
-                    下午：大洋路精華 <span class="time-badge">重點</span><br>
-                    1. <span class="highlight-blue">大洋路起標打卡</span><br>
-                    2. <span class="highlight-blue">Twelve Apostles (十二使徒岩)</span><br>
-                    3. <span class="highlight-blue">Tom and Eva Lookout</span>
+                    下午精華：<br>
+                    1. <a href="https://www.google.com/maps/search/?api=1&query=Twelve+Apostles" target="_blank" class="map-link">Twelve Apostles (十二使徒岩)<i class="fa-solid fa-map-location-dot map-icon"></i></a><br>
+                    2. <a href="https://www.google.com/maps/search/?api=1&query=Tom+and+Eva+Lookout" target="_blank" class="map-link">Tom and Eva Lookout<i class="fa-solid fa-map-location-dot map-icon"></i></a><br>
+                    3. <a href="https://www.google.com/maps/search/?api=1&query=The+Grotto" target="_blank" class="map-link">The Grotto (岩洞)<i class="fa-solid fa-map-location-dot map-icon"></i></a><br>
+                    4. <a href="https://www.google.com/maps/search/?api=1&query=London+Bridge+Great+Ocean+Road" target="_blank" class="map-link">London Bridge (大洋路版)<i class="fa-solid fa-map-location-dot map-icon"></i></a>
                 </li>
                 <li class="itinerary-item">
-                    晚餐：Port Campbell (REAL Pizza Pasta Salads)。
-                </li>
-                <li class="itinerary-item">
-                    夜間/夕陽：<br>
-                    <span class="highlight-blue">The Grotto</span> (特別岩石洞)<br>
-                    <span class="highlight-blue">London Bridge</span> (大洋路版)
+                    晚餐：<a href="https://www.google.com/maps/search/?api=1&query=REAL+Pizza+Pasta+Salads+Port+Campbell" target="_blank" class="map-link">REAL Pizza Pasta Salads<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
                 </li>
             </ul>
             <div class="hotel-info">
-                <i class="fa-solid fa-bed"></i> 住宿：2 Morris St (Port Campbell區域)
+                <i class="fa-solid fa-bed"></i> 住宿：<a href="https://www.google.com/maps/search/?api=1&query=2+Morris+St+Port+Campbell" target="_blank" class="map-link">2 Morris St<i class="fa-solid fa-map-location-dot map-icon"></i></a>
             </div>
         </div>
-
 
         <!-- Day 5 -->
         <div id="day5" class="section-header">
@@ -533,34 +542,34 @@
             <div class="drive-header"><i class="fa-solid fa-steering-wheel" style="margin-right:8px;"></i> 駕駛情報</div>
             <div class="drive-detail">
                 <span>Port Campbell → Warrnambool (1hr) → Halls Gap (2.5hr)</span>
-                <div class="alert-row"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i> 必加：Warrnambool 市區 (進山前最後補給)</div>
+                <div class="alert-row"><i class="fa-solid fa-gas-pump" style="margin-right:6px;"></i> 必加：<a href="https://www.google.com/maps/search/?api=1&query=APCO+Warrnambool" target="_blank" class="map-link">APCO Warrnambool</a> (進山前最後便宜油價)</div>
             </div>
         </div>
 
         <div class="card">
             <ul class="itinerary-list">
                 <li class="itinerary-item">
-                    上午：<span class="highlight-blue">Hopkins Falls</span> 寬闊瀑布。
+                    上午：<a href="https://www.google.com/maps/search/?api=1&query=Hopkins+Falls" target="_blank" class="map-link">Hopkins Falls<i class="fa-solid fa-map-location-dot map-icon"></i></a> 瀑布。
                 </li>
                 <li class="itinerary-item">
-                    中午：<span class="highlight-blue">Warrnambool 市區</span> <span class="time-badge">補給站</span><br>
-                    午餐、加油、超市採買一天早餐。
+                    中午：<a href="https://www.google.com/maps/search/?api=1&query=Warrnambool" target="_blank" class="map-link">Warrnambool 市區<i class="fa-solid fa-map-location-dot map-icon"></i></a> <span class="time-badge">補給站</span><br>
+                    午餐、加油、超市採買。
                 </li>
                 <li class="itinerary-item">
-                    下午：前往 Grampians National Park。<br>
-                    健行路線 (二選一，視體力)：<br>
-                    A. <span class="highlight-blue">Pinnacle Lookout</span> (奇岩怪石)<br>
-                    B. <span class="highlight-blue">Boroka Lookout</span> (輕鬆觀景)
+                    下午：Grampians National Park 健行。<br>
+                    路線二選一：<br>
+                    A. <a href="https://www.google.com/maps/search/?api=1&query=The+Pinnacle+Lookout" target="_blank" class="map-link">Pinnacle Lookout<i class="fa-solid fa-map-location-dot map-icon"></i></a> (奇岩)<br>
+                    B. <a href="https://www.google.com/maps/search/?api=1&query=Boroka+Lookout" target="_blank" class="map-link">Boroka Lookout<i class="fa-solid fa-map-location-dot map-icon"></i></a> (輕鬆)
+                    <div class="guide-tip"><i class="fa-solid fa-bug"></i> 導遊提醒：內陸蒼蠅非常多，建議準備防蠅網或噴防蚊液。</div>
                 </li>
                 <li class="itinerary-item">
-                    晚餐：Halls Gap 附近 (Flame Brothers / Raccolto Pizzeria)。
+                    晚餐：<a href="https://www.google.com/maps/search/?api=1&query=Flame+Brothers+Halls+Gap" target="_blank" class="map-link">Flame Brothers<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
                 </li>
             </ul>
             <div class="hotel-info">
-                <i class="fa-solid fa-bed"></i> 住宿：Halls Gap Escape Townhouses
+                <i class="fa-solid fa-bed"></i> 住宿：<a href="https://www.google.com/maps/search/?api=1&query=Halls+Gap+Escape+Townhouses" target="_blank" class="map-link">Halls Gap Escape Townhouses<i class="fa-solid fa-map-location-dot map-icon"></i></a>
             </div>
         </div>
-
 
         <!-- Day 6 -->
         <div id="day6" class="section-header">
@@ -572,7 +581,7 @@
             <div class="drive-header"><i class="fa-solid fa-steering-wheel" style="margin-right:8px;"></i> 駕駛情報</div>
             <div class="drive-detail">
                 <span>Halls Gap → Ballarat (1.5hr) → 墨爾本市區 (1.5hr)</span>
-                <div class="alert-row"><i class="fa-solid fa-triangle-exclamation" style="margin-right:6px;"></i> 進墨爾本市區請注意「勾形轉彎 (Hook Turn)」標誌。</div>
+                <div class="alert-row"><i class="fa-solid fa-traffic-light" style="margin-right:6px;"></i> 進市區注意：勾形轉彎 (Hook Turn) 標誌，需靠左停在路口中央等待。</div>
             </div>
         </div>
 
@@ -582,19 +591,19 @@
                     上午：從 Halls Gap 啟程。
                 </li>
                 <li class="itinerary-item">
-                    重頭戲：<span class="highlight-blue">Sovereign Hill 巴拉瑞特淘金鎮</span> <span class="time-badge">11:00-17:00</span><br>
+                    重頭戲：<a href="https://www.google.com/maps/search/?api=1&query=Sovereign+Hill" target="_blank" class="map-link">Sovereign Hill 淘金鎮<i class="fa-solid fa-map-location-dot map-icon"></i></a> <span class="time-badge">11:00-17:00</span><br>
                     <span class="highlight-red">★ 需預訂門票。</span><br>
-                    <span class="highlight-red">★ 建議：在市區超市先買好午餐帶入園區野餐。</span>
+                    建議：在超市先買好午餐帶入園區野餐，省錢又方便。
                 </li>
                 <li class="itinerary-item">
-                    傍晚：開車返回墨爾本市區。
+                    傍晚：開車返回 <a href="https://www.google.com/maps/search/?api=1&query=The+Eminence+Apartments+by+CLLIX" target="_blank" class="map-link">墨爾本市區<i class="fa-solid fa-map-location-dot map-icon"></i></a>。
                 </li>
                 <li class="itinerary-item">
-                    晚餐：市區用餐 (菜系將依家人喜好決定)。
+                    晚餐：市區用餐 (自由發揮)。
                 </li>
             </ul>
             <div class="hotel-info">
-                <i class="fa-solid fa-building"></i> 住宿：The Eminence Apartments (市區)
+                <i class="fa-solid fa-building"></i> 住宿：<a href="https://www.google.com/maps/search/?api=1&query=The+Eminence+Apartments+by+CLLIX" target="_blank" class="map-link">The Eminence Apartments<i class="fa-solid fa-map-location-dot map-icon"></i></a>
             </div>
         </div>
 
