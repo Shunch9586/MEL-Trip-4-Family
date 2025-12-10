@@ -39,8 +39,7 @@
             padding-bottom: 80px;
         }
 
-        /* --- 新增：置頂群組容器 --- */
-        /* 將標題和導航包在一起，實現同時置頂 */
+        /* --- 置頂群組容器 --- */
         .sticky-header-group {
             position: sticky;
             top: 0;
@@ -48,17 +47,17 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* 增加陰影層次感 */
         }
 
-        /* App Header 樣式微調 */
+        /* App Header 樣式微調 - 已改為置中 */
         .app-header {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* 更深邃有質感的深藍漸層 */
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* 深藍質感漸層 */
             color: white;
             padding: 20px 15px 15px;
-            /* 移除原本單獨的 sticky，改由外層容器控制 */
+            text-align: center; /* 文字置中 */
         }
         .app-header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         .app-header p { margin: 5px 0 0; font-size: 13px; opacity: 0.9; font-weight: 300; }
 
-        /* 導航列樣式微調 */
+        /* 導航列樣式微調 - 已改為置中 */
         .nav-scroller {
             display: flex;
             overflow-x: auto;
@@ -68,6 +67,14 @@
             backdrop-filter: blur(5px); /* 毛玻璃特效 */
             border-bottom: 1px solid rgba(0,0,0,0.05);
             -webkit-overflow-scrolling: touch;
+            justify-content: center; /* 讓導航按鈕置中 */
+        }
+        
+        /* 若螢幕較小內容溢出時，讓 justify-content: center 不會切掉左邊內容 (安全機制) */
+        @media (max-width: 600px) {
+            .nav-scroller {
+                justify-content: flex-start; /* 手機版如果按鈕太多，靠左比較好滑動 */
+            }
         }
         
         /* 隱藏滾動條 (美觀) */
@@ -77,7 +84,7 @@
 
         .nav-item {
             flex: 0 0 auto;
-            margin-right: 8px;
+            margin: 0 4px; /* 調整間距使置中更緊湊 */
             padding: 8px 16px;
             border-radius: 25px; /* 更圓潤 */
             font-size: 14px;
@@ -269,7 +276,7 @@
 </head>
 <body>
 
-    <!-- 新增：置頂群組容器 (包含 Header 與 導航) -->
+    <!-- 置頂群組容器 (包含 Header 與 導航) -->
     <div class="sticky-header-group">
         <!-- App Header -->
         <div class="app-header">
@@ -277,16 +284,16 @@
             <p>南澳海岸、大洋路與淘金鎮冒險</p>
         </div>
 
-        <!-- Navigation -->
+        <!-- Navigation (順序已更新：航班 -> 提醒 -> D1...D6) -->
         <div class="nav-scroller">
             <a href="#flight" class="nav-item">航班</a>
-            <a href="#day1" class="nav-item">D1 海岸</a>
-            <a href="#day2" class="nav-item">D2 溫泉</a>
-            <a href="#day3" class="nav-item">D3 會合</a>
-            <a href="#day4" class="nav-item">D4 12門徒</a>
-            <a href="#day5" class="nav-item">D5 健行</a>
-            <a href="#day6" class="nav-item">D6 淘金</a>
             <a href="#tips" class="nav-item">提醒</a>
+            <a href="#day1" class="nav-item">D1</a>
+            <a href="#day2" class="nav-item">D2</a>
+            <a href="#day3" class="nav-item">D3</a>
+            <a href="#day4" class="nav-item">D4</a>
+            <a href="#day5" class="nav-item">D5</a>
+            <a href="#day6" class="nav-item">D6</a>
         </div>
     </div>
 
@@ -309,11 +316,34 @@
                     <span style="font-size:12px; color:#888;">預留 1.5hr 入關取車</span>
                 </div>
             </div>
-            <!-- 根據您的資訊，此處僅顯示確定的抵達航班，若有回程資訊可在此補充 -->
+        </div>
+
+        <!-- 區塊二：注意事項 (移至此處) -->
+        <div id="tips" class="section-header">
+            <div class="section-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <h2>行前與重要提醒</h2>
+        </div>
+
+        <div class="card tips-card">
+            <ul class="itinerary-list">
+                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                    <span class="highlight-red">天氣穿著：</span><br>
+                    12月墨爾本雖是夏天，但早晚溫差極大，且大洋路海風強勁。請務必準備<span class="highlight-blue">防風外套</span>與<span class="highlight-blue">洋蔥式穿搭</span>。
+                </li>
+                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                    <span class="highlight-red">交通規則：</span><br>
+                    1. 墨爾本市區有「免費電車區 (Free Tram Zone)」，出此區域<span class="highlight-red">上下車務必刷卡</span>，查票很嚴格。<br>
+                    2. 右駕開車請隨時提醒駕駛「靠左行駛」。
+                </li>
+                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                    <span class="highlight-red">超市補給：</span><br>
+                    看到 Coles 或 Woolworths 就盡量補齊水與零食，偏鄉超商價格昂貴。
+                </li>
+            </ul>
         </div>
 
 
-        <!-- 區塊二：每日行程 -->
+        <!-- 區塊三：每日行程 (Day 1 - Day 6) -->
         
         <!-- Day 1 -->
         <div id="day1" class="section-header">
@@ -566,31 +596,6 @@
             <div class="hotel-info">
                 <i class="fa-solid fa-building"></i> 住宿：The Eminence Apartments (市區)
             </div>
-        </div>
-
-
-        <!-- 區塊三：注意事項 -->
-        <div id="tips" class="section-header">
-            <div class="section-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
-            <h2>行前與重要提醒</h2>
-        </div>
-
-        <div class="card tips-card">
-            <ul class="itinerary-list">
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
-                    <span class="highlight-red">天氣穿著：</span><br>
-                    12月墨爾本雖是夏天，但早晚溫差極大，且大洋路海風強勁。請務必準備<span class="highlight-blue">防風外套</span>與<span class="highlight-blue">洋蔥式穿搭</span>。
-                </li>
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
-                    <span class="highlight-red">交通規則：</span><br>
-                    1. 墨爾本市區有「免費電車區 (Free Tram Zone)」，出此區域<span class="highlight-red">上下車務必刷卡</span>，查票很嚴格。<br>
-                    2. 右駕開車請隨時提醒駕駛「靠左行駛」。
-                </li>
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
-                    <span class="highlight-red">超市補給：</span><br>
-                    看到 Coles 或 Woolworths 就盡量補齊水與零食，偏鄉超商價格昂貴。
-                </li>
-            </ul>
         </div>
 
     </div>
