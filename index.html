@@ -39,7 +39,7 @@
             padding-bottom: 80px;
         }
 
-        /* 連結樣式優化 (針對 Google Maps) */
+        /* 連結樣式優化 */
         a.map-link {
             color: var(--link-color);
             text-decoration: none;
@@ -62,7 +62,7 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
-            background: white; /* 確保背景不透明 */
+            background: white; 
         }
 
         /* App Header */
@@ -75,7 +75,7 @@
         .app-header h1 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: 1.2px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
         .app-header p { margin: 5px 0 0; font-size: 12px; opacity: 0.9; font-weight: 300; }
 
-        /* 導航列 */
+        /* 導航列 (修正置中) */
         .nav-scroller {
             display: flex;
             overflow-x: auto;
@@ -84,6 +84,13 @@
             background: rgba(255, 255, 255, 0.98); 
             border-bottom: 1px solid rgba(0,0,0,0.05);
             -webkit-overflow-scrolling: touch;
+            justify-content: center; /* 關鍵修正：內容置中 */
+        }
+        /* 避免小螢幕時置中導致左邊被切掉 */
+        @media (max-width: 450px) {
+            .nav-scroller {
+                justify-content: flex-start;
+            }
         }
         .nav-scroller::-webkit-scrollbar { display: none; }
 
@@ -99,7 +106,7 @@
             font-weight: 500;
             transition: all 0.2s;
             display: flex;
-            flex-direction: column; /* 讓日期在下方 */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             line-height: 1.2;
@@ -130,7 +137,6 @@
             margin-bottom: 15px;
             padding-bottom: 8px;
             border-bottom: 3px solid var(--primary-blue);
-            /* 關鍵修正：加大上方的緩衝空間，避免被 sticky header 擋住 */
             scroll-margin-top: 180px; 
         }
         .section-header h2 {
@@ -176,8 +182,9 @@
         .flight-date-small { font-size: 12px; color: #888; }
         .flight-group-title { font-size: 13px; color: #555; background: #eee; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; font-weight: bold;}
 
-        /* 行程項目列表 */
+        /* 行程項目列表 (通用) */
         .itinerary-list { list-style: none; padding: 0; margin: 0; }
+        
         .itinerary-item {
             position: relative;
             padding-left: 20px;
@@ -194,6 +201,25 @@
             top: 8px;
             width: 10px;
             height: 10px;
+            background: #fff;
+            border: 3px solid var(--primary-blue);
+            border-radius: 50%;
+        }
+
+        /* --- Tips 專用項目樣式 (修復標題被擋住問題) --- */
+        .tips-item {
+            position: relative;
+            padding-left: 28px; /* 增加左邊距，讓文字不會壓到圓點 */
+            margin-bottom: 16px;
+            border-left: none; /* Tips 不要有左邊的時間軸線 */
+        }
+        .tips-item::before {
+            content: '';
+            position: absolute;
+            left: 0; /* 圓點靠左對齊 */
+            top: 6px;
+            width: 12px;
+            height: 12px;
             background: #fff;
             border: 3px solid var(--primary-blue);
             border-radius: 50%;
@@ -229,7 +255,7 @@
             color: var(--highlight-red);
             font-weight: 500;
             display: flex;
-            align-items: flex-start; /* 讓圖示對齊頂部 */
+            align-items: flex-start; 
             font-size: 12px;
             margin-top: 5px;
             background: rgba(255,255,255,0.7);
@@ -344,7 +370,7 @@
             <div class="alert-row" style="background-color:#ffecec; color:#c0392b;"><i class="fa-solid fa-bell" style="margin-right:5px;"></i> 注意：12/21 (週日) 晚上就要去機場報到！</div>
         </div>
 
-        <!-- 注意事項 (已修正標題擋住問題) -->
+        <!-- 注意事項 (修復後) -->
         <div id="tips" class="section-header">
             <div class="section-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
             <h2>行前與重要提醒</h2>
@@ -352,21 +378,21 @@
 
         <div class="card tips-card">
             <ul class="itinerary-list">
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                <li class="tips-item">
                     <span class="highlight-red">退稅福利 (TRS)：</span><br>
                     單一店家消費滿 $300 AUD (可累積) 記得要發票，離境時可退稅約 10%。
                 </li>
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                <li class="tips-item">
                     <span class="highlight-red">天氣穿著：</span><br>
                     12月是夏天但溫差極大，大洋路風大，請備<span class="highlight-blue">防風外套</span>與<span class="highlight-blue">洋蔥式穿搭</span>。
                 </li>
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                <li class="tips-item">
                     <span class="highlight-red">生活與安全：</span><br>
                     1. 澳洲自來水(Tap Water)可生飲。<br>
                     2. 緊急救難電話：<a href="tel:000" class="map-link">000</a> (警察/救護車/消防)。<br>
                     3. 紫外線極強，請務必擦防曬、戴墨鏡。
                 </li>
-                <li class="itinerary-item" style="border-left:none; padding-left:0;">
+                <li class="tips-item">
                     <span class="highlight-red">交通規則：</span><br>
                     1. 墨爾本市區「免費電車區」外上下車必刷卡。<br>
                     2. 駕駛請隨時默念「靠左行駛」。
