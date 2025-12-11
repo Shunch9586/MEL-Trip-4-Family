@@ -206,17 +206,17 @@
             border-radius: 50%;
         }
 
-        /* --- Tips 專用項目樣式 (修復標題被擋住問題) --- */
+        /* --- Tips 專用項目樣式 --- */
         .tips-item {
             position: relative;
-            padding-left: 28px; /* 增加左邊距，讓文字不會壓到圓點 */
+            padding-left: 28px;
             margin-bottom: 16px;
-            border-left: none; /* Tips 不要有左邊的時間軸線 */
+            border-left: none;
         }
         .tips-item::before {
             content: '';
             position: absolute;
-            left: 0; /* 圓點靠左對齊 */
+            left: 0;
             top: 6px;
             width: 12px;
             height: 12px;
@@ -370,7 +370,7 @@
             <div class="alert-row" style="background-color:#ffecec; color:#c0392b;"><i class="fa-solid fa-bell" style="margin-right:5px;"></i> 注意：12/21 (週日) 晚上就要去機場報到！</div>
         </div>
 
-        <!-- 注意事項 (修復後) -->
+        <!-- 注意事項 (已更新) -->
         <div id="tips" class="section-header">
             <div class="section-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
             <h2>行前與重要提醒</h2>
@@ -387,15 +387,10 @@
                     12月是夏天但溫差極大，大洋路風大，請備<span class="highlight-blue">防風外套</span>與<span class="highlight-blue">洋蔥式穿搭</span>。
                 </li>
                 <li class="tips-item">
-                    <span class="highlight-red">生活與安全：</span><br>
-                    1. 澳洲自來水(Tap Water)可生飲。<br>
-                    2. 緊急救難電話：<a href="tel:000" class="map-link">000</a> (警察/救護車/消防)。<br>
-                    3. 紫外線極強，請務必擦防曬、戴墨鏡。
-                </li>
-                <li class="tips-item">
-                    <span class="highlight-red">交通規則：</span><br>
-                    1. 墨爾本市區「免費電車區」外上下車必刷卡。<br>
-                    2. 駕駛請隨時默念「靠左行駛」。
+                    <span class="highlight-red">交通注意事項：</span><br>
+                    1. <span class="highlight-blue">右駕要小心</span>，隨時默念「靠左行駛」。<br>
+                    2. 停車規則蠻複雜的，大家一起行動確認標誌比較好。<br>
+                    3. <span class="highlight-red">駕駛人絕對不可以使用手機！</span>若要看路，請路邊停車或請副駕幫忙看（抓很嚴，罰單巨額！）。
                 </li>
             </ul>
         </div>
